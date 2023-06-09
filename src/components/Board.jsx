@@ -4,11 +4,16 @@ import { Square } from './square';
 
 export default function Board() {
   const [squareValues, setSquareValues] = useState(Array(9).fill(null));
+  const [isXTurn, setIsXTurn] = useState(true);
 
   function handleSquareClick(i) {
     const nextSquares = squareValues.slice();
-    nextSquares[i] = 'X';
-    setSquareValues(nextSquares);
+    if (nextSquares[i] === null) {
+      const tiTacMark = isXTurn ? 'X' : 'O';
+      nextSquares[i] = tiTacMark;
+      setSquareValues(nextSquares);
+      setIsXTurn(!isXTurn);
+    }
   }
 
   return (
