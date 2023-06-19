@@ -9,40 +9,53 @@ import { GameBox } from '../stitches_styles/GameBox';
 import { BoardWrapper } from '../stitches_styles/Wrappers';
 import { AsideItem } from '../stitches_styles/AsideItem';
 
+let indexId = 1;
+
 export default function Board() {
   const [squareValues, setSquareValues] = useState(Array(9).fill(null));
   const [isXTurn, setIsXTurn] = useState(true);
   const [winner, setWinner] = useState(false);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([
+    { indexId: 0, data: Array(9).fill(null), isTurOf: 'starting point' },
+  ]);
 
   function handleSquareClick(i) {
+    console.log(squareValues);
     const nextSquares = squareValues.slice();
     if (nextSquares[i] === null && winner === false) {
       const tiTacMark = isXTurn ? 'X' : 'O';
       nextSquares[i] = tiTacMark;
       setSquareValues(nextSquares);
-      setHistory(...history, nextSquares);
-      console.log(history);
+      setHistory([
+        ...history,
+        {
+          indexId: indexId++,
+          data: nextSquares,
+          isTurOf: tiTacMark,
+        },
+      ]);
       calculateWinner(nextSquares, setWinner);
       setIsXTurn(!isXTurn);
     }
   }
 
-  function handleHistoryPrev() {}
-
-  function handleHistoryNext() {}
+  function handleNavigateHistory(data) {
+    setSquareValues(data);
+  }
 
   return (
     <GameBox>
       <AsideBox>
-        {/* {history.map((item) => {
-          return <AsideItem>Move of: </AsideItem>;
-        })} */}
-        <AsideItem>Turn of X</AsideItem>
-        <AsideItem>Turn of O</AsideItem>
-        <AsideItem>Turn of X</AsideItem>
-        <AsideItem>Turn of O</AsideItem>
-        <AsideItem>Turn of X</AsideItem>
+        {history.map((item) => {
+          return (
+            <AsideItem
+              key={item.indexId}
+              onClick={() => handleNavigateHistory(item.data)}
+            >
+              Step:{item.indexId} | Was turn of: {item.isTurOf}
+            </AsideItem>
+          );
+        })}
       </AsideBox>
       <BoardWrapper>
         {winner ? (
