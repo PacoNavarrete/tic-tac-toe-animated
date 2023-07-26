@@ -23,7 +23,7 @@ export default function Board() {
     console.log(squareValues);
     const nextSquares = squareValues.slice();
     if (nextSquares[i] === null && winner === false) {
-      const tiTacMark = isXTurn ? 'X' : 'O';
+      const tiTacMark = isXTurn ? '/icons/bio-1.svg' : '/icons/bio-2.svg';
       nextSquares[i] = tiTacMark;
       setSquareValues(nextSquares);
       setHistory([

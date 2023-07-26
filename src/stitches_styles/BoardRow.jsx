@@ -5,4 +5,6 @@ export const BoardRow = styled('div', {
   flexWrap: 'nowrap',
   justifyContent: 'center',
   alignItems: 'center',
+  gap: '5px',
+  marginTop: '5px',
 });

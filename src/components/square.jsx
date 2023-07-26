@@ -5,5 +5,9 @@ export function Square({ value, onSquareClick }) {
     onSquareClick();
   }
 
-  return <CrossButton onClick={handleClick}>{value}</CrossButton>;
+  return (
+    <CrossButton onClick={handleClick}>
+      <img src={value} width="60px" />
+    </CrossButton>
+  );
 }
