@@ -15,12 +15,12 @@ export default function Board() {
   const [squareValues, setSquareValues] = useState(Array(9).fill(null));
   const [isXTurn, setIsXTurn] = useState(true);
   const [winner, setWinner] = useState(false);
+  const [tie, setTie] = useState(null);
   const [history, setHistory] = useState([
     { indexId: 0, data: Array(9).fill(null), isTurOf: 'starting point' },
   ]);
 
   function handleSquareClick(i) {
-    console.log(squareValues);
     const nextSquares = squareValues.slice();
     if (nextSquares[i] === null && winner === false) {
       const tiTacMark = isXTurn ? '/icons/bio-1.svg' : '/icons/bio-2.svg';
@@ -34,7 +34,7 @@ export default function Board() {
           isTurOf: tiTacMark,
         },
       ]);
-      calculateWinner(nextSquares, setWinner);
+      calculateWinner(nextSquares, setWinner, setTie);
       setIsXTurn(!isXTurn);
     }
   }
@@ -60,11 +60,12 @@ export default function Board() {
       <BoardWrapper>
         {winner ? (
           <WinnerMessage>El ganador es: {winner}</WinnerMessage>
-        ) : (
+        ) : !tie ? (
           <TurnMessage>
             <p>El siguiente turno es de: {isXTurn ? 'X' : 'O'} </p>
           </TurnMessage>
-        )}
+        ) : null}
+        {tie && !winner ? <WinnerMessage>Empate</WinnerMessage> : null}
         <div>
           <BoardRow>
             <Square

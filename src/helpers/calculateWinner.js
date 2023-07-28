@@ -1,5 +1,7 @@
-export default function calculateWinner(squareValues = [], setWinner) {
-  // ['X', null , 'X', null, 'X', null, null, null, null ]
+export default function calculateWinner(squareValues = [], setWinner, setTie) {
+  const available = squareValues.filter((item) => {
+    return item == null;
+  });
 
   const rulesToWin = [
     [0, 1, 2],
@@ -20,6 +22,8 @@ export default function calculateWinner(squareValues = [], setWinner) {
       squareValues[a] === squareValues[c]
     ) {
       setWinner(squareValues[a]);
+    } else if (available.length === 0) {
+      setTie(true);
     }
   }
   return null;
