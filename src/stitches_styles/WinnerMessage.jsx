@@ -8,7 +8,14 @@ export const WinnerMessage = styled('div', {
   marginTop: '20px',
   padding: '10px',
   width: 'fit-content',
-  height: '40px',
+  height: 'fit-content',
+});
+
+export const WinnerText = styled('p', {
   backgroundColor: 'Black',
   color: 'White',
+  width: 'auto',
+  height: '20px',
+  padding: '20px 20px',
+  borderRadius: '20px',
 });

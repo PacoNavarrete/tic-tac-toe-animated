@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { BoardRow } from '../stitches_styles/BoardRow';
 import { Square } from './square';
 import calculateWinner from '../helpers/calculateWinner';
-import { WinnerMessage } from '../stitches_styles/WinnerMessage';
-import { TurnMessage } from '../stitches_styles/TurnMessage';
+import { WinnerMessage, WinnerText } from '../stitches_styles/WinnerMessage';
+import { TurnMessage, TurnText } from '../stitches_styles/TurnMessage';
 import { AsideBox } from '../stitches_styles/AsideBox';
 import { GameBox } from '../stitches_styles/GameBox';
 import { BoardWrapper } from '../stitches_styles/Wrappers';
@@ -59,10 +59,28 @@ export default function Board() {
       </AsideBox>
       <BoardWrapper>
         {winner ? (
-          <WinnerMessage>El ganador es: {winner}</WinnerMessage>
+          <WinnerMessage>
+            <WinnerText>El ganador es:</WinnerText>
+            <img src={winner} width="50px" />
+          </WinnerMessage>
         ) : !tie ? (
           <TurnMessage>
-            <p>El siguiente turno es de: {isXTurn ? 'X' : 'O'} </p>
+            <TurnText>El siguiente turno es de: </TurnText>
+            {isXTurn ? (
+              <img
+                src={'/icons/bio-1.svg'}
+                width="50px"
+                data-aos="fade-up"
+                data-aos-anchor-placement="bottom-bottom"
+              />
+            ) : (
+              <img
+                src={'/icons/bio-2.svg'}
+                width="50px"
+                data-aos="fade-up"
+                data-aos-anchor-placement="bottom-bottom"
+              />
+            )}
           </TurnMessage>
         ) : null}
         {tie && !winner ? <WinnerMessage>Empate</WinnerMessage> : null}
