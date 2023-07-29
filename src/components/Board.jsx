@@ -45,18 +45,21 @@ export default function Board() {
 
   return (
     <GameBox>
-      <AsideBox>
-        {history.map((item) => {
-          return (
-            <AsideItem
-              key={item.indexId}
-              onClick={() => handleNavigateHistory(item.data)}
-            >
-              Step:{item.indexId} | Was turn of: {item.isTurOf}
-            </AsideItem>
-          );
-        })}
-      </AsideBox>
+      {winner || tie ? (
+        <AsideBox data-aos="fade-right">
+          {/* TODO: REMOVE NOT NEEDED STRUCTURES FROM HISTORY STATE */}
+          {history.map((item) => {
+            return (
+              <AsideItem
+                key={item.indexId}
+                onClick={() => handleNavigateHistory(item.data)}
+              >
+                Go Back to Step:{item.indexId}
+              </AsideItem>
+            );
+          })}
+        </AsideBox>
+      ) : null}
       <BoardWrapper>
         {winner ? (
           <WinnerMessage>
@@ -67,19 +70,9 @@ export default function Board() {
           <TurnMessage>
             <TurnText>El siguiente turno es de: </TurnText>
             {isXTurn ? (
-              <img
-                src={'/icons/bio-1.svg'}
-                width="50px"
-                data-aos="fade-up"
-                data-aos-anchor-placement="bottom-bottom"
-              />
+              <img src={'/icons/bio-1.svg'} width="50px" data-aos="fade-down" />
             ) : (
-              <img
-                src={'/icons/bio-2.svg'}
-                width="50px"
-                data-aos="fade-up"
-                data-aos-anchor-placement="bottom-bottom"
-              />
+              <img src={'/icons/bio-2.svg'} width="50px" data-aos="fade-down" />
             )}
           </TurnMessage>
         ) : null}

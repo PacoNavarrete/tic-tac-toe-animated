@@ -7,7 +7,7 @@ export function Square({ value, onSquareClick }) {
 
   return (
     <CrossButton onClick={handleClick}>
-      <img src={value} width="60px" />
+      {value ? <img src={value} width="60px" data-aos="fade-down" /> : null}
     </CrossButton>
   );
 }
