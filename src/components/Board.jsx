@@ -8,6 +8,7 @@ import { AsideBox } from '../stitches_styles/AsideBox';
 import { GameBox } from '../stitches_styles/GameBox';
 import { BoardWrapper } from '../stitches_styles/Wrappers';
 import { AsideItem } from '../stitches_styles/AsideItem';
+import { MedTitle, SmallTitle } from '../stitches_styles/Text';
 
 let indexId = 1;
 
@@ -48,13 +49,18 @@ export default function Board() {
       {winner || tie ? (
         <AsideBox data-aos="fade-right">
           {/* TODO: REMOVE NOT NEEDED STRUCTURES FROM HISTORY STATE */}
+          <MedTitle>Historial</MedTitle>
+          <br />
           {history.map((item) => {
             return (
               <AsideItem
                 key={item.indexId}
                 onClick={() => handleNavigateHistory(item.data)}
+                css={{
+                  backgroundColor: item.indexId === 0 ? 'Yellow' : '',
+                }}
               >
-                Go Back to Step:{item.indexId}
+                <SmallTitle>Movimiento | {item.indexId}</SmallTitle>
               </AsideItem>
             );
           })}
