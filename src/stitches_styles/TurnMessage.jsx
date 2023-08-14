@@ -1,5 +1,4 @@
 import { styled } from '@stitches/react';
-import { WinnerText } from './WinnerMessage';
 
 export const TurnMessage = styled('div', {
   display: 'flex',
@@ -12,4 +11,3 @@ export const TurnMessage = styled('div', {
   height: 'fit-content',
 });
 
-export const TurnText = styled(WinnerText, {});

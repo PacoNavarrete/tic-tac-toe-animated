@@ -11,11 +11,3 @@ export const WinnerMessage = styled('div', {
   height: 'fit-content',
 });
 
-export const WinnerText = styled('p', {
-  backgroundColor: 'Black',
-  color: 'White',
-  width: 'auto',
-  height: '20px',
-  padding: '20px 20px',
-  borderRadius: '20px',
-});

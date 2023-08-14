@@ -3,6 +3,7 @@ import '@fontsource-variable/open-sans';
 
 export const TextBase = styled('p', {
   fontFamily: 'Open Sans Variable',
+  height: 'auto',
 });
 
 export const BigTitle = styled(TextBase, {
@@ -21,3 +22,11 @@ export const SmallTitle = styled(TextBase, {
   fontWeight: '600',
   color: '#000',
 });
+
+export const TurnText = styled(MedTitle, {
+  color: '#fff',
+});
+
+export const WinnerText = styled(TurnText, {
+  
+})

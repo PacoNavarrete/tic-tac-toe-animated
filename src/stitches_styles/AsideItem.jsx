@@ -12,6 +12,7 @@ export const AsideItem = styled('div', {
   textAlign: 'center',
   '&:hover': {
     cursor: 'pointer',
-    backgroundColor: 'rgb(255, 185, 0)',
+    backgroundColor: 'rgb(255 0 105)',
   },
+
 });

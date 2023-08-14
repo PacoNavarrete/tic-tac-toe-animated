@@ -2,13 +2,18 @@ import { useState } from 'react';
 import { BoardRow } from '../stitches_styles/BoardRow';
 import { Square } from './square';
 import calculateWinner from '../helpers/calculateWinner';
-import { WinnerMessage, WinnerText } from '../stitches_styles/WinnerMessage';
-import { TurnMessage, TurnText } from '../stitches_styles/TurnMessage';
+import { WinnerMessage } from '../stitches_styles/WinnerMessage';
+import { TurnMessage } from '../stitches_styles/TurnMessage';
 import { AsideBox } from '../stitches_styles/AsideBox';
 import { GameBox } from '../stitches_styles/GameBox';
 import { BoardWrapper } from '../stitches_styles/Wrappers';
 import { AsideItem } from '../stitches_styles/AsideItem';
-import { MedTitle, SmallTitle } from '../stitches_styles/Text';
+import {
+  MedTitle,
+  SmallTitle,
+  TurnText,
+  WinnerText,
+} from '../stitches_styles/Text';
 
 let indexId = 1;
 
@@ -20,11 +25,12 @@ export default function Board() {
   const [history, setHistory] = useState([
     { indexId: 0, data: Array(9).fill(null), isTurOf: 'starting point' },
   ]);
+  const [itemClicked, setItemClicked] = useState(null);
 
   function handleSquareClick(i) {
     const nextSquares = squareValues.slice();
-    if (nextSquares[i] === null && winner === false) {
-      const tiTacMark = isXTurn ? '/icons/bio-1.svg' : '/icons/bio-2.svg';
+    if (nextSquares[i] === null && winner === false && tie == null) {
+      const tiTacMark = isXTurn ? '/icons/taco.svg' : '/icons/burger.svg';
       nextSquares[i] = tiTacMark;
       setSquareValues(nextSquares);
       setHistory([
@@ -40,8 +46,9 @@ export default function Board() {
     }
   }
 
-  function handleNavigateHistory(data) {
+  function handleNavigateHistory(data, id) {
     setSquareValues(data);
+    setItemClicked(id);
   }
 
   return (
@@ -55,12 +62,13 @@ export default function Board() {
             return (
               <AsideItem
                 key={item.indexId}
-                onClick={() => handleNavigateHistory(item.data)}
+                onClick={() => handleNavigateHistory(item.data, item.indexId)}
                 css={{
-                  backgroundColor: item.indexId === 0 ? 'Yellow' : '',
+                  backgroundColor:
+                    itemClicked == item.indexId ? 'rgb(255 0 105)' : '',
                 }}
               >
-                <SmallTitle>Movimiento | {item.indexId}</SmallTitle>
+                <SmallTitle>Movimiento {item.indexId}</SmallTitle>
               </AsideItem>
             );
           })}
@@ -69,16 +77,22 @@ export default function Board() {
       <BoardWrapper>
         {winner ? (
           <WinnerMessage>
-            <WinnerText>El ganador es:</WinnerText>
+            <WinnerText>!Ganador!</WinnerText>
             <img src={winner} width="50px" />
           </WinnerMessage>
         ) : !tie ? (
           <TurnMessage>
-            <TurnText>El siguiente turno es de: </TurnText>
+            <TurnText> </TurnText>
             {isXTurn ? (
-              <img src={'/icons/bio-1.svg'} width="50px" data-aos="fade-down" />
+              // <img src={'/icons/taco.svg'} width="50px" data-aos="fade-down" />
+              <TurnText> Mr. Taco</TurnText>
             ) : (
-              <img src={'/icons/bio-2.svg'} width="50px" data-aos="fade-down" />
+              // <img
+              //   src={'/icons/burger.svg'}
+              //   width="50px"
+              //   data-aos="fade-down"
+              // />
+              <TurnText> Ms. Hamburguesa</TurnText>
             )}
           </TurnMessage>
         ) : null}
