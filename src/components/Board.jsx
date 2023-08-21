@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { BoardRow } from '../stitches_styles/BoardRow';
 import { Square } from './square';
-import calculateWinner from '../helpers/calculateWinner';
 import { WinnerMessage } from '../stitches_styles/WinnerMessage';
 import { TurnMessage } from '../stitches_styles/TurnMessage';
 import { AsideBox } from '../stitches_styles/AsideBox';
@@ -27,25 +26,6 @@ export default function Board() {
     { indexId: 0, data: Array(9).fill(null), isTurOf: 'starting point' },
   ]);
   const [itemClicked, setItemClicked] = useState(null);
-
-  function handleSquareClick(i) {
-    const nextSquares = squareValues.slice();
-    if (nextSquares[i] === null && winner === false && tie == null) {
-      const tiTacMark = isXTurn ? '/icons/taco.svg' : '/icons/burger.svg';
-      nextSquares[i] = tiTacMark;
-      setSquareValues(nextSquares);
-      setHistory([
-        ...history,
-        {
-          indexId: indexId++,
-          data: nextSquares,
-          isTurOf: tiTacMark,
-        },
-      ]);
-      calculateWinner(nextSquares, setWinner, setTie);
-      setIsXTurn(!isXTurn);
-    }
-  }
 
   function handleNavigateHistory(data, id) {
     setSquareValues(data);
