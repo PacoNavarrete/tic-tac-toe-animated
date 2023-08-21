@@ -11,6 +11,7 @@ import { AsideItem } from '../stitches_styles/AsideItem';
 import {
   MedTitle,
   SmallTitle,
+  TieText,
   TurnText,
   WinnerText,
 } from '../stitches_styles/Text';
@@ -82,21 +83,14 @@ export default function Board() {
           </WinnerMessage>
         ) : !tie ? (
           <TurnMessage>
-            <TurnText> </TurnText>
             {isXTurn ? (
-              // <img src={'/icons/taco.svg'} width="50px" data-aos="fade-down" />
               <TurnText> Mr. Taco</TurnText>
             ) : (
-              // <img
-              //   src={'/icons/burger.svg'}
-              //   width="50px"
-              //   data-aos="fade-down"
-              // />
               <TurnText> Ms. Hamburguesa</TurnText>
             )}
           </TurnMessage>
         ) : null}
-        {tie && !winner ? <WinnerMessage>Empate</WinnerMessage> : null}
+        {tie && !winner ? <TieText>Empate</TieText> : null}
         <div>
           <BoardRow>
             <Square

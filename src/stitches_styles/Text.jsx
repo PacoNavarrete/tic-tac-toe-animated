@@ -27,6 +27,8 @@ export const TurnText = styled(MedTitle, {
   color: '#fff',
 });
 
-export const WinnerText = styled(TurnText, {
-  
-})
+export const WinnerText = styled(TurnText, {});
+
+export const TieText = styled(MedTitle, {
+  color: '#fff',
+});
