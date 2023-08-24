@@ -1,60 +1,70 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import Board from './components/Board';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
-function reducer(state, action) {
-  switch (action.type) {
-    case '[UPADE: squareValues]': {
-      return {
-        ...state,
-        squareValues: action.nextSquares, //[TODO] pasar nextSquares en el dispatch junto con type.
-      };
-    }
-    case '[SWITCH: playerTurn': {
-      return {
-        ...state,
-        isXTurn: !state.isXTurn, //[TODO] check if syntax is correct
-      };
-    }
-    case '[SET: winner]': {
-      return {
-        ...state,
-        winner: action.newWinner,
-      };
-    }
-    case '[SET: tie]': {
-      return {
-        ...state,
-        tie: !state.tie, //[TODO] check if syntax is correct
-      };
-    }
-    case '[UPDATE: history]': {
-      return {
-        ...state,
-        history: [],
-      };
-    }
-  }
-}
+import reducer from './store/reducer';
+import { initialState } from './store/initialState';
 
 function App() {
+  const [historyIndex, setHistoryIndex] = useState(0);
+  const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     AOS.init();
-  }, []);
-
-  const initialState = {
-    squareValues: Array(9).fill(null),
-    isXTurn: true,
-    winner: false,
-    tie: false,
-    history: [{ indexId: 0, historyData: Array(9).fill(null) }],
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
+    console.log(state);
+  }, [state]);
 
   return (
     <>
+      <button
+        onClick={() => {
+          dispatch({
+            type: '[UPDATE: history]',
+            historyIndex: historyIndex,
+            nextSquares: ['h', 'o', 'l', 'a'],
+          });
+          setHistoryIndex(historyIndex + 1);
+        }}
+      >
+        Click me to update history
+      </button>
+      <button
+        onClick={() => {
+          dispatch({
+            type: '[SET: tie]',
+          });
+        }}
+      >
+        Click me to set tie-game
+      </button>
+      <button
+        onClick={() => {
+          dispatch({
+            type: '[SET: winner]',
+            newWinner: 'Yes the string the of winner her',
+          });
+        }}
+      >
+        Click me to set winner
+      </button>
+      <button
+        onClick={() => {
+          dispatch({
+            type: '[SWITCH: playerTurn]',
+          });
+        }}
+      >
+        Click me to Switch player turn
+      </button>
+      <button
+        onClick={() => {
+          dispatch({
+            type: '[UPADE: squareValues]',
+            nextSquares: ['b', 'y', 'e'],
+          });
+        }}
+      >
+        Click me to upadet squareValues
+      </button>
       <Board />
     </>
   );
