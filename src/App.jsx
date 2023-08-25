@@ -2,23 +2,31 @@ import { useEffect, useReducer, useState } from 'react';
 import Board from './components/Board';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import BoardContext from './helpers/boardContex';
 import reducer from './store/reducer';
 import { initialState } from './store/initialState';
+import { actionsType } from './store/actions';
 
 function App() {
   const [historyIndex, setHistoryIndex] = useState(0);
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     AOS.init();
-    console.log(state);
-  }, [state]);
+  }, []);
+
+  function handleUpdateSquareValues(data) {
+    dispatch({
+      type: actionsType.updateSquareValues,
+      nextSquares: data,
+    });
+  }
 
   return (
     <>
       <button
         onClick={() => {
           dispatch({
-            type: '[UPDATE: history]',
+            type: actionsType.updateHistory,
             historyIndex: historyIndex,
             nextSquares: ['h', 'o', 'l', 'a'],
           });
@@ -30,7 +38,7 @@ function App() {
       <button
         onClick={() => {
           dispatch({
-            type: '[SET: tie]',
+            type: actionsType.setTie,
           });
         }}
       >
@@ -39,7 +47,7 @@ function App() {
       <button
         onClick={() => {
           dispatch({
-            type: '[SET: winner]',
+            type: actionsType.setWinner,
             newWinner: 'Yes the string the of winner her',
           });
         }}
@@ -49,22 +57,13 @@ function App() {
       <button
         onClick={() => {
           dispatch({
-            type: '[SWITCH: playerTurn]',
+            type: actionsType.switchTurn,
           });
         }}
       >
         Click me to Switch player turn
       </button>
-      <button
-        onClick={() => {
-          dispatch({
-            type: '[UPADE: squareValues]',
-            nextSquares: ['b', 'y', 'e'],
-          });
-        }}
-      >
-        Click me to upadet squareValues
-      </button>
+      <button onClick={() => {}}>Click me to upadet squareValues</button>
       <Board />
     </>
   );
