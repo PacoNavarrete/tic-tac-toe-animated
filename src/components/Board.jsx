@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { BoardRow } from '../stitches_styles/BoardRow';
 import { Square } from './square';
 import { WinnerMessage } from '../stitches_styles/WinnerMessage';
@@ -14,32 +14,47 @@ import {
   TurnText,
   WinnerText,
 } from '../stitches_styles/Text';
-
-let indexId = 1;
+import BoardContext from '../helpers/boardContex';
+import { actionTypes } from '../store/actionTypes';
+import { actionHandlers } from '../store/actionHandlers';
+import calculateWinner from '../helpers/calculateWinner';
 
 export default function Board() {
-  const [squareValues, setSquareValues] = useState(Array(9).fill(null));
-  const [isXTurn, setIsXTurn] = useState(true);
-  const [winner, setWinner] = useState(false);
-  const [tie, setTie] = useState(null);
-  const [history, setHistory] = useState([
-    { indexId: 0, data: Array(9).fill(null), isTurOf: 'starting point' },
-  ]);
+  const { gameState, gameDispatch } = useContext(BoardContext);
   const [itemClicked, setItemClicked] = useState(null);
 
+  console.log(gameState);
+
+  function handleSquareClick(i) {
+    const nextSquares = gameState.squareValues.slice();
+    if (
+      nextSquares[i] === null &&
+      gameState.winner === false &&
+      gameState.tie == false
+    ) {
+      const tiTacMark = gameState.isXTurn
+        ? '/icons/taco.svg'
+        : '/icons/burger.svg';
+      nextSquares[i] = tiTacMark;
+      gameDispatch(actionHandlers.handleUpdateSquareValues(nextSquares));
+      gameDispatch(actionHandlers.handleUpdateHistory(nextSquares));
+      calculateWinner(nextSquares, setWinner, setTie);
+      gameDispatch(actionHandlers.handleSwitchPlayer());
+    }
+  }
+
   function handleNavigateHistory(data, id) {
-    setSquareValues(data);
+    gameDispatch(actionHandlers.handleUpdateSquareValues(data));
     setItemClicked(id);
   }
 
   return (
     <GameBox>
-      {winner || tie ? (
+      {gameState.winner || gameState.tie ? (
         <AsideBox data-aos="fade-right">
-          {/* TODO: REMOVE NOT NEEDED STRUCTURES FROM HISTORY STATE */}
           <MedTitle>Historial</MedTitle>
           <br />
-          {history.map((item) => {
+          {gameState.history.map((item) => {
             return (
               <AsideItem
                 key={item.indexId}
@@ -56,37 +71,37 @@ export default function Board() {
         </AsideBox>
       ) : null}
       <BoardWrapper>
-        {winner ? (
+        {gameState.winner ? (
           <WinnerMessage>
             <WinnerText>!Ganador!</WinnerText>
-            <img src={winner} width="50px" />
+            <img src={gameState.winner} width="50px" />
           </WinnerMessage>
-        ) : !tie ? (
+        ) : !gameState.tie ? (
           <TurnMessage>
-            {isXTurn ? (
+            {gameState.isXTurn ? (
               <TurnText> Mr. Taco</TurnText>
             ) : (
               <TurnText> Ms. Hamburguesa</TurnText>
             )}
           </TurnMessage>
         ) : null}
-        {tie && !winner ? <TieText>Empate</TieText> : null}
+        {gameState.tie && !gameState.winner ? <TieText>Empate</TieText> : null}
         <div>
           <BoardRow>
             <Square
-              value={squareValues[0]}
+              value={gameState.squareValues[0]}
               onSquareClick={() => {
                 handleSquareClick(0);
               }}
             />
             <Square
-              value={squareValues[1]}
+              value={gameState.squareValues[1]}
               onSquareClick={() => {
                 handleSquareClick(1);
               }}
             />
             <Square
-              value={squareValues[2]}
+              value={gameState.squareValues[2]}
               onSquareClick={() => {
                 handleSquareClick(2);
               }}
@@ -94,19 +109,19 @@ export default function Board() {
           </BoardRow>
           <BoardRow>
             <Square
-              value={squareValues[3]}
+              value={gameState.squareValues[3]}
               onSquareClick={() => {
                 handleSquareClick(3);
               }}
             />
             <Square
-              value={squareValues[4]}
+              value={gameState.squareValues[4]}
               onSquareClick={() => {
                 handleSquareClick(4);
               }}
             />
             <Square
-              value={squareValues[5]}
+              value={gameState.squareValues[5]}
               onSquareClick={() => {
                 handleSquareClick(5);
               }}
@@ -114,19 +129,19 @@ export default function Board() {
           </BoardRow>
           <BoardRow>
             <Square
-              value={squareValues[6]}
+              value={gameState.squareValues[6]}
               onSquareClick={() => {
                 handleSquareClick(6);
               }}
             />
             <Square
-              value={squareValues[7]}
+              value={gameState.squareValues[7]}
               onSquareClick={() => {
                 handleSquareClick(7);
               }}
             />
             <Square
-              value={squareValues[8]}
+              value={gameState.squareValues[8]}
               onSquareClick={() => {
                 handleSquareClick(8);
               }}

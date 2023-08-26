@@ -1,70 +1,26 @@
-import { useEffect, useReducer, useState } from 'react';
-import Board from './components/Board';
+import { useEffect, useReducer } from 'react';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+import Board from './components/Board';
 import BoardContext from './helpers/boardContex';
-import reducer from './store/reducer';
+import gameReducer from './store/gameReducer';
 import { initialState } from './store/initialState';
-import { actionsType } from './store/actions';
+import { actionHandlers } from './store/actionHandlers';
+
+import 'aos/dist/aos.css';
 
 function App() {
-  const [historyIndex, setHistoryIndex] = useState(0);
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [gameState, gameDispatch] = useReducer(gameReducer, initialState);
   useEffect(() => {
     AOS.init();
   }, []);
 
-  function handleUpdateSquareValues(data) {
-    dispatch({
-      type: actionsType.updateSquareValues,
-      nextSquares: data,
-    });
-  }
-
   return (
     <>
-      <button
-        onClick={() => {
-          dispatch({
-            type: actionsType.updateHistory,
-            historyIndex: historyIndex,
-            nextSquares: ['h', 'o', 'l', 'a'],
-          });
-          setHistoryIndex(historyIndex + 1);
-        }}
+      <BoardContext.Provider
+        value={{ actionHandlers, gameState, gameDispatch }}
       >
-        Click me to update history
-      </button>
-      <button
-        onClick={() => {
-          dispatch({
-            type: actionsType.setTie,
-          });
-        }}
-      >
-        Click me to set tie-game
-      </button>
-      <button
-        onClick={() => {
-          dispatch({
-            type: actionsType.setWinner,
-            newWinner: 'Yes the string the of winner her',
-          });
-        }}
-      >
-        Click me to set winner
-      </button>
-      <button
-        onClick={() => {
-          dispatch({
-            type: actionsType.switchTurn,
-          });
-        }}
-      >
-        Click me to Switch player turn
-      </button>
-      <button onClick={() => {}}>Click me to upadet squareValues</button>
-      <Board />
+        <Board />
+      </BoardContext.Provider>
     </>
   );
 }

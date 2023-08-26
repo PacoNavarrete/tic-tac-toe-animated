@@ -1,39 +1,39 @@
-import { actionsType } from './actions';
+import { actionTypes } from './actionTypes';
 
-export default function reducer(state, action) {
+export default function gameReducer(state, action) {
   switch (action.type) {
-    case actionsType.updateSquareValues: {
+    case actionTypes.updateSquareValues: {
       return {
         ...state,
-        squareValues: action.nextSquares,
+        squareValues: action.payload,
       };
     }
-    case actionsType.switchTurn: {
+    case actionTypes.switchTurn: {
       return {
         ...state,
         isXTurn: !state.isXTurn,
       };
     }
-    case actionsType.setWinner: {
+    case actionTypes.setWinner: {
       return {
         ...state,
         winner: action.newWinner,
       };
     }
-    case actionsType.setTie: {
+    case actionTypes.setTie: {
       return {
         ...state,
         tie: !state.tie,
       };
     }
-    case actionsType.updateHistory: {
+    case actionTypes.updateHistory: {
       return {
         ...state,
         history: [
           ...state.history,
           {
-            indexId: action.historyIndex + 1,
-            historyData: action.nextSquares,
+            indexId: state.history.length - 1 + 1,
+            historyData: action.payload,
           },
         ],
       };
