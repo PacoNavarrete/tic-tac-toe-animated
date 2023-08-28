@@ -1,114 +1,46 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { BoardRow } from '../stitches_styles/BoardRow';
 import { Square } from './square';
-import { WinnerMessage } from '../stitches_styles/WinnerMessage';
-import { TurnMessage } from '../stitches_styles/TurnMessage';
-import { AsideBox } from '../stitches_styles/AsideBox';
 import { GameBox } from '../stitches_styles/GameBox';
 import { BoardWrapper } from '../stitches_styles/Wrappers';
-import { AsideItem } from '../stitches_styles/AsideItem';
-import {
-  MedTitle,
-  SmallTitle,
-  TieText,
-  TurnText,
-  WinnerText,
-} from '../stitches_styles/Text';
 import BoardContext from '../helpers/boardContex';
 
-import handleSquareClick from '../helpers/handleSquareClick';
-import handleNavigateHistory from '../helpers/handleNavigateHistory';
+import AsideHistory from './AsideHistory';
+import GameStatus from './GameStatus';
 
 export default function Board() {
-  const { gameState, gameDispatch } = useContext(BoardContext);
-  const [itemClicked, setItemClicked] = useState(null);
-
-  const squaresFirstRow = [0, 1, 2];
-  const squaresSecondRow = [3, 4, 5];
-  const squareThirdRow = [6, 7, 8];
-
+  const { gameState } = useContext(BoardContext);
+  const boardData = {
+    firstRow: [0, 1, 2],
+    secondRow: [3, 4, 5],
+    thirdRow: [6, 7, 8],
+  };
   return (
     <GameBox>
-      {gameState.winner || gameState.tie ? (
-        <AsideBox data-aos="fade-right">
-          <MedTitle>Historial</MedTitle>
-          <br />
-          {gameState.history.map((item) => {
+      <AsideHistory />
+      <BoardWrapper>
+        <GameStatus />
+        <BoardRow>
+          {boardData.firstRow.map((id) => {
             return (
-              <AsideItem
-                key={item.indexId}
-                onClick={() => {
-                  handleNavigateHistory(item.historyData, gameDispatch);
-                  setItemClicked(item.indexId);
-                }}
-                css={{
-                  backgroundColor:
-                    itemClicked == item.indexId ? 'rgb(255 0 105)' : '',
-                }}
-              >
-                <SmallTitle>Movimiento {item.indexId}</SmallTitle>
-              </AsideItem>
+              <Square key={id} value={gameState.squareValues[id]} id={id} />
             );
           })}
-        </AsideBox>
-      ) : null}
-      <BoardWrapper>
-        {gameState.winner ? (
-          <WinnerMessage>
-            <WinnerText>!Ganador!</WinnerText>
-            <img src={gameState.winner} width="50px" />
-          </WinnerMessage>
-        ) : !gameState.tie ? (
-          <TurnMessage>
-            {gameState.isXTurn ? (
-              <TurnText> Mr. Taco</TurnText>
-            ) : (
-              <TurnText> Ms. Hamburguesa</TurnText>
-            )}
-          </TurnMessage>
-        ) : null}
-        {gameState.tie && !gameState.winner ? <TieText>Empate</TieText> : null}
-        <div>
-          <BoardRow>
-            {squaresFirstRow.map((id) => {
-              return (
-                <Square
-                  key={id}
-                  value={gameState.squareValues[id]}
-                  onSquareClick={() => {
-                    handleSquareClick(id, gameState, gameDispatch);
-                  }}
-                />
-              );
-            })}
-          </BoardRow>
-          <BoardRow>
-            {squaresSecondRow.map((id) => {
-              return (
-                <Square
-                  key={id}
-                  value={gameState.squareValues[id]}
-                  onSquareClick={() => {
-                    handleSquareClick(id, gameState, gameDispatch);
-                  }}
-                />
-              );
-            })}
-          </BoardRow>
-          <BoardRow>
-            {squareThirdRow.map((id) => {
-              return (
-                <Square
-                  key={id}
-                  value={gameState.squareValues[id]}
-                  onSquareClick={() => {
-                    handleSquareClick(id, gameState, gameDispatch);
-                  }}
-                />
-              );
-            })}
-          </BoardRow>
-        </div>
+        </BoardRow>
+        <BoardRow>
+          {boardData.secondRow.map((id) => {
+            return (
+              <Square key={id} value={gameState.squareValues[id]} id={id} />
+            );
+          })}
+        </BoardRow>
+        <BoardRow>
+          {boardData.thirdRow.map((id) => {
+            return (
+              <Square key={id} value={gameState.squareValues[id]} id={id} />
+            );
+          })}
+        </BoardRow>
       </BoardWrapper>
     </GameBox>
   );
