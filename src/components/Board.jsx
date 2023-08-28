@@ -15,38 +15,22 @@ import {
   WinnerText,
 } from '../stitches_styles/Text';
 import BoardContext from '../helpers/boardContex';
-import { actionTypes } from '../store/actionTypes';
+
+import handleSquareClick from '../helpers/handleSquareClick';
 import { actionHandlers } from '../store/actionHandlers';
-import calculateWinner from '../helpers/calculateWinner';
 
 export default function Board() {
   const { gameState, gameDispatch } = useContext(BoardContext);
   const [itemClicked, setItemClicked] = useState(null);
 
-  console.log(gameState);
-
-  function handleSquareClick(i) {
-    const nextSquares = gameState.squareValues.slice();
-    if (
-      nextSquares[i] === null &&
-      gameState.winner === false &&
-      gameState.tie == false
-    ) {
-      const tiTacMark = gameState.isXTurn
-        ? '/icons/taco.svg'
-        : '/icons/burger.svg';
-      nextSquares[i] = tiTacMark;
-      gameDispatch(actionHandlers.handleUpdateSquareValues(nextSquares));
-      gameDispatch(actionHandlers.handleUpdateHistory(nextSquares));
-      calculateWinner(nextSquares, setWinner, setTie);
-      gameDispatch(actionHandlers.handleSwitchPlayer());
-    }
-  }
-
   function handleNavigateHistory(data, id) {
     gameDispatch(actionHandlers.handleUpdateSquareValues(data));
     setItemClicked(id);
   }
+
+  const squaresFirstRow = [0, 1, 2];
+  const squaresSecondRow = [3, 4, 5];
+  const squareThirdRow = [6, 7, 8];
 
   return (
     <GameBox>
@@ -58,7 +42,9 @@ export default function Board() {
             return (
               <AsideItem
                 key={item.indexId}
-                onClick={() => handleNavigateHistory(item.data, item.indexId)}
+                onClick={() =>
+                  handleNavigateHistory(item.historyData, item.indexId)
+                }
                 css={{
                   backgroundColor:
                     itemClicked == item.indexId ? 'rgb(255 0 105)' : '',
@@ -88,64 +74,43 @@ export default function Board() {
         {gameState.tie && !gameState.winner ? <TieText>Empate</TieText> : null}
         <div>
           <BoardRow>
-            <Square
-              value={gameState.squareValues[0]}
-              onSquareClick={() => {
-                handleSquareClick(0);
-              }}
-            />
-            <Square
-              value={gameState.squareValues[1]}
-              onSquareClick={() => {
-                handleSquareClick(1);
-              }}
-            />
-            <Square
-              value={gameState.squareValues[2]}
-              onSquareClick={() => {
-                handleSquareClick(2);
-              }}
-            />
+            {squaresFirstRow.map((id) => {
+              return (
+                <Square
+                  key={id}
+                  value={gameState.squareValues[id]}
+                  onSquareClick={() => {
+                    handleSquareClick(id, gameState, gameDispatch);
+                  }}
+                />
+              );
+            })}
           </BoardRow>
           <BoardRow>
-            <Square
-              value={gameState.squareValues[3]}
-              onSquareClick={() => {
-                handleSquareClick(3);
-              }}
-            />
-            <Square
-              value={gameState.squareValues[4]}
-              onSquareClick={() => {
-                handleSquareClick(4);
-              }}
-            />
-            <Square
-              value={gameState.squareValues[5]}
-              onSquareClick={() => {
-                handleSquareClick(5);
-              }}
-            />
+            {squaresSecondRow.map((id) => {
+              return (
+                <Square
+                  key={id}
+                  value={gameState.squareValues[id]}
+                  onSquareClick={() => {
+                    handleSquareClick(id, gameState, gameDispatch);
+                  }}
+                />
+              );
+            })}
           </BoardRow>
           <BoardRow>
-            <Square
-              value={gameState.squareValues[6]}
-              onSquareClick={() => {
-                handleSquareClick(6);
-              }}
-            />
-            <Square
-              value={gameState.squareValues[7]}
-              onSquareClick={() => {
-                handleSquareClick(7);
-              }}
-            />
-            <Square
-              value={gameState.squareValues[8]}
-              onSquareClick={() => {
-                handleSquareClick(8);
-              }}
-            />
+            {squareThirdRow.map((id) => {
+              return (
+                <Square
+                  key={id}
+                  value={gameState.squareValues[id]}
+                  onSquareClick={() => {
+                    handleSquareClick(id, gameState, gameDispatch);
+                  }}
+                />
+              );
+            })}
           </BoardRow>
         </div>
       </BoardWrapper>
