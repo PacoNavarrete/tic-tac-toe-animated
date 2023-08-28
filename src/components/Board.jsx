@@ -17,16 +17,11 @@ import {
 import BoardContext from '../helpers/boardContex';
 
 import handleSquareClick from '../helpers/handleSquareClick';
-import { actionHandlers } from '../store/actionHandlers';
+import handleNavigateHistory from '../helpers/handleNavigateHistory';
 
 export default function Board() {
   const { gameState, gameDispatch } = useContext(BoardContext);
   const [itemClicked, setItemClicked] = useState(null);
-
-  function handleNavigateHistory(data, id) {
-    gameDispatch(actionHandlers.handleUpdateSquareValues(data));
-    setItemClicked(id);
-  }
 
   const squaresFirstRow = [0, 1, 2];
   const squaresSecondRow = [3, 4, 5];
@@ -42,9 +37,10 @@ export default function Board() {
             return (
               <AsideItem
                 key={item.indexId}
-                onClick={() =>
-                  handleNavigateHistory(item.historyData, item.indexId)
-                }
+                onClick={() => {
+                  handleNavigateHistory(item.historyData, gameDispatch);
+                  setItemClicked(item.indexId);
+                }}
                 css={{
                   backgroundColor:
                     itemClicked == item.indexId ? 'rgb(255 0 105)' : '',
