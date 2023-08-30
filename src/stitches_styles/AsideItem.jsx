@@ -13,6 +13,6 @@ export const AsideItem = styled('div', {
   '&:hover': {
     cursor: 'pointer',
     backgroundColor: 'rgb(255 0 105)',
+    color: '#fff',
   },
-
 });
