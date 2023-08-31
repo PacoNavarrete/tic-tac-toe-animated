@@ -29,4 +29,9 @@ export const actionHandlers = {
       payload,
     };
   },
+  handleToggleShowHistory() {
+    return {
+      type: actionTypes.toggleShowHistory,
+    };
+  },
 };

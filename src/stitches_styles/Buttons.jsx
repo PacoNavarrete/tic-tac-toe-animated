@@ -32,3 +32,42 @@ export const RestartButton = styled('button', {
     color: '#fff',
   },
 });
+
+export const HistoryOpenButton = styled('button',{
+  width: 'auto',
+  height: 'auto',
+  color: '#000',
+  backgroundColor: '#fff',
+  border: '2px solid #fff',
+  marginBottom: '5px',
+  padding: '5px',
+  borderRadius: '50px',
+  textAlign: 'center',
+  transform: 'rotate(-90deg)',
+  '&:hover': {
+    cursor: 'pointer',
+    backgroundColor: 'rgb(255 0 105)',
+    color: '#fff',
+  },
+})
+
+export const HistoryCloseButton = styled(HistoryOpenButton, {
+  position: 'absolute',
+  right: '-10px',
+  top: '50%',
+  width: 'auto',
+  height: 'auto',
+  color: '#000',
+  backgroundColor: '#fff',
+  border: '2px solid #fff',
+  marginBottom: '5px',
+  padding: '5px',
+  borderRadius: '50px',
+  textAlign: 'center',
+  transform: 'rotate(-90deg)',
+  '&:hover': {
+    cursor: 'pointer',
+    backgroundColor: 'rgb(255 0 105)',
+    color: '#fff',
+  },
+});

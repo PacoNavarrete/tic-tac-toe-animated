@@ -4,4 +4,5 @@ export const actionTypes = {
   setWinner: '[SET_WINNER]',
   setTie: '[SET_TIE]',
   updateHistory: '[UPDATE_HISTORY]',
+  toggleShowHistory: '[TOGGLE_SHOW_HISTORY]',
 };
