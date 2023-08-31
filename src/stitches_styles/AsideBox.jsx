@@ -10,7 +10,4 @@ export const AsideBox = styled('aside', {
   minHeight: '100vh',
   backgroundColor: '#000',
   borderRadius: '0 30px 30px 0',
-  '@media Screen and (max-width: 700px)': {
-    display: 'none',
-  },
 });

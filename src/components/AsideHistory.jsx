@@ -31,7 +31,7 @@ export default function AsideHistory() {
                   gameDispatch(actionHandlers.handleToggleShowHistory())
                 }
               >
-                Cerrar Historial
+                X
               </HistoryCloseButton>
             </HistoryWrapper>
           ) : (

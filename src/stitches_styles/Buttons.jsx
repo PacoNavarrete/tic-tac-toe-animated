@@ -54,6 +54,24 @@ export const HistoryOpenButton = styled('button', {
   },
 });
 
-export const HistoryCloseButton = styled(HistoryOpenButton, {
-  left: '0',
+export const HistoryCloseButton = styled('button', {
+  fontSize: '18px',
+  position: 'absolute',
+  top: '20px',
+  right: '0',
+  width: 'auto',
+  height: 'auto',
+  color: '#000',
+  backgroundColor: '#fff',
+  border: '2px solid #fff',
+  marginBottom: '5px',
+  padding: '5px',
+  borderRadius: '50px',
+  textAlign: 'center',
+  transform: 'rotate(-90deg)',
+  '&:hover': {
+    cursor: 'pointer',
+    backgroundColor: 'rgb(255 0 105)',
+    color: '#fff',
+  },
 });
