@@ -41,9 +41,8 @@ export default function gameReducer(state, action) {
     case actionTypes.toggleShowHistory: {
       return {
         ...state,
-        toggleShowHistory: !state.toggleShowHistory,
-      }
-
+        showHistory: !state.showHistory,
+      };
     }
     default:
       return state;
