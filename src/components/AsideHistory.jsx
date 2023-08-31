@@ -14,7 +14,6 @@ import HistoryList from './HistoryList';
 export default function AsideHistory() {
   const { gameState, gameDispatch } = useContext(BoardContext);
 
-  console.log(gameState.showHistory);
   return (
     <>
       {gameState.winner || gameState.tie ? (

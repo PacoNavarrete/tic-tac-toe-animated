@@ -10,8 +10,8 @@ export default function handleSquareClick(i, gameState, gameDispatch) {
     gameState.tie == false
   ) {
     const tiTacMark = gameState.isXTurn
-      ? '/icons/taco.svg'
-      : '/icons/burger.svg';
+      ? './icons/taco.svg'
+      : './icons/burger.svg';
     nextSquares[i] = tiTacMark;
     gameDispatch(actionHandlers.handleUpdateSquareValues(nextSquares));
     gameDispatch(actionHandlers.handleUpdateHistory(nextSquares));
