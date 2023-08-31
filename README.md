@@ -27,6 +27,8 @@
 
 [![Product Name Screen Shot][product-screenshot]](./public/app_images/play_won.png)
 
+<a href="https://paconavarrete.github.io/tic-tac-toe-animated/" target="_blank">Play the game here!</a>
+
 This project is a tic-tac-toe game using useContext + useReducer hooks, the theme of the game is a confrontation between the taco and hamburger foods.
 
 Here's why:
